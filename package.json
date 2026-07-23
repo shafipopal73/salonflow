@@ -16,7 +16,7 @@
   "desktop:dev": "concurrently \"npm run dev\" \"npm run electron\"",
   "desktop:build": "npm run build && electron-builder",
   "desktop:mac": "npm run build && electron-builder --mac",
-  "desktop:win": "npm run build && electron-builder --win"
+  "desktop:win": "npm run build && electron-builder --win --publish never"
 },
   "dependencies": {
     "@base44/sdk": "^0.8.40",
