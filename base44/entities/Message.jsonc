@@ -1,0 +1,126 @@
+{
+  "name": "Message",
+  "type": "object",
+  "properties": {
+    "sender_id": {
+      "type": "string"
+    },
+    "sender_name": {
+      "type": "string"
+    },
+    "sender_role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "stylist"
+      ]
+    },
+    "thread_partner_id": {
+      "type": "string"
+    },
+    "thread_partner_name": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "message_type": {
+      "type": "string",
+      "enum": [
+        "chat",
+        "service_update"
+      ],
+      "default": "chat"
+    },
+    "media_url": {
+      "type": "string"
+    },
+    "media_type": {
+      "type": "string",
+      "enum": [
+        "image",
+        "video",
+        "audio"
+      ]
+    },
+    "read": {
+      "type": "boolean",
+      "default": false
+    },
+    "salon_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "sender_id",
+    "sender_name",
+    "sender_role",
+    "thread_partner_id",
+    "body"
+  ],
+  "rls": {
+    "create": {
+      "data.salon_id": "{{user.data.salon_id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.sender_id": "{{user.id}}"
+        },
+        {
+          "data.thread_partner_id": "{{user.id}}"
+        },
+        {
+          "$and": [
+            {
+              "data.salon_id": "{{user.data.salon_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.sender_id": "{{user.id}}"
+        },
+        {
+          "$and": [
+            {
+              "data.salon_id": "{{user.data.salon_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.sender_id": "{{user.id}}"
+        },
+        {
+          "$and": [
+            {
+              "data.salon_id": "{{user.data.salon_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

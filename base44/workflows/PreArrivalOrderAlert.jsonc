@@ -1,0 +1,81 @@
+{
+  "name": "Pre-Arrival Order Alert",
+  "description": "Alerts front desk 10 minutes before a guest's pre-arrival order",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "Order",
+      "events": [
+        "create"
+      ]
+    },
+    "condition": "${ .trigger.data.is_pre_order == true and .trigger.data.arrival_time != null }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "pre_arrival_alert",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "compute_delay": {
+          "call": "compute_seconds_until",
+          "with": {
+            "target_iso": "${ .trigger.data.arrival_time }"
+          },
+          "then": "check_delay",
+          "x-base44": {
+            "title": "Compute time until arrival",
+            "description": "Seconds remaining"
+          }
+        }
+      },
+      {
+        "check_delay": {
+          "switch": [
+            {
+              "when": "${ .compute_delay.seconds <= 600 }",
+              "then": "send_alert"
+            },
+            {
+              "when": "${ true }",
+              "then": "wait_then_alert"
+            }
+          ]
+        }
+      },
+      {
+        "wait_then_alert": {
+          "wait": "${ \"PT\" + ((.compute_delay.seconds - 600) | floor | tostring) + \"S\" }",
+          "then": "send_alert",
+          "x-base44": {
+            "title": "Wait until 10 min before arrival",
+            "description": "Durable delay"
+          }
+        }
+      },
+      {
+        "send_alert": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "sendPreArrivalAlert",
+            "args": {
+              "order_id": "${ .trigger.entity_id }",
+              "item_name": "${ .trigger.data.item_name }",
+              "salon_id": "${ .trigger.data.salon_id }",
+              "guest_name": "${ .trigger.data.requested_by_name }",
+              "arrival_time": "${ .trigger.data.arrival_time }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Send front desk alert",
+            "description": "Creates notification"
+          }
+        }
+      }
+    ]
+  }
+}

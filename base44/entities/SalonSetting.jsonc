@@ -1,0 +1,52 @@
+{
+  "name": "SalonSetting",
+  "type": "object",
+  "properties": {
+    "salon_name": {
+      "type": "string"
+    },
+    "salon_id": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "rls": {
+    "create": {
+      "$and": [
+        {
+          "data.salon_id": "{{user.data.salon_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": true,
+    "update": {
+      "$and": [
+        {
+          "data.salon_id": "{{user.data.salon_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "data.salon_id": "{{user.data.salon_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

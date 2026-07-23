@@ -1,0 +1,153 @@
+{
+  "name": "MenuItemOptionGroup",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "input_type": {
+      "type": "string",
+      "enum": [
+        "options",
+        "number",
+        "yesno"
+      ],
+      "default": "options"
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "extra_price": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "required": {
+      "type": "boolean",
+      "default": false
+    },
+    "allow_multiple": {
+      "type": "boolean",
+      "default": false
+    },
+    "number_unit": {
+      "type": "string"
+    },
+    "number_min": {
+      "type": "number",
+      "default": 0
+    },
+    "number_max": {
+      "type": "number"
+    },
+    "number_step": {
+      "type": "number",
+      "default": 1
+    },
+    "number_price_per_unit": {
+      "type": "number",
+      "default": 0
+    },
+    "number_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "unit_label": {
+            "type": "string"
+          },
+          "price_per_unit": {
+            "type": "number",
+            "default": 0
+          },
+          "min": {
+            "type": "number",
+            "default": 0
+          },
+          "max": {
+            "type": "number"
+          },
+          "step": {
+            "type": "number",
+            "default": 1
+          }
+        }
+      }
+    },
+    "yes_label": {
+      "type": "string",
+      "default": "Yes"
+    },
+    "no_label": {
+      "type": "string",
+      "default": "No"
+    },
+    "yes_price": {
+      "type": "number",
+      "default": 0
+    },
+    "no_price": {
+      "type": "number",
+      "default": 0
+    },
+    "menu_item_id": {
+      "type": "string"
+    },
+    "salon_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "menu_item_id",
+    "salon_id"
+  ],
+  "rls": {
+    "create": {
+      "$and": [
+        {
+          "data.salon_id": "{{user.data.salon_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": true,
+    "update": {
+      "$and": [
+        {
+          "data.salon_id": "{{user.data.salon_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "data.salon_id": "{{user.data.salon_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

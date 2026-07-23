@@ -1,0 +1,98 @@
+{
+  "name": "Service",
+  "type": "object",
+  "properties": {
+    "stylist_id": {
+      "type": "string"
+    },
+    "stylist_name": {
+      "type": "string"
+    },
+    "client_name": {
+      "type": "string"
+    },
+    "service_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ongoing",
+        "completed"
+      ],
+      "default": "ongoing"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ended_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "salon_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "stylist_id",
+    "stylist_name",
+    "client_name",
+    "service_name"
+  ],
+  "rls": {
+    "create": {
+      "data.salon_id": "{{user.data.salon_id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "$and": [
+            {
+              "data.salon_id": "{{user.data.salon_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        },
+        {
+          "data.stylist_id": "{{user.id}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "$and": [
+            {
+              "data.salon_id": "{{user.data.salon_id}}"
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        },
+        {
+          "data.stylist_id": "{{user.id}}"
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "data.salon_id": "{{user.data.salon_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

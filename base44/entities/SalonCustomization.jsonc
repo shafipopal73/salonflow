@@ -1,0 +1,119 @@
+{
+  "name": "SalonCustomization",
+  "type": "object",
+  "properties": {
+    "salon_id": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "guest"
+      ],
+      "default": "admin"
+    },
+    "salon_display_name": {
+      "type": "string"
+    },
+    "salon_logo_url": {
+      "type": "string"
+    },
+    "logo_size": {
+      "type": "number",
+      "default": 32
+    },
+    "menu_background_image": {
+      "type": "string"
+    },
+    "menu_background_video": {
+      "type": "string"
+    },
+    "bg_overlay_opacity": {
+      "type": "number",
+      "default": 80
+    },
+    "primary_color": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "secondary_color": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "accent_color": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "text_color": {
+      "type": "string",
+      "default": "#1a1a1a"
+    },
+    "card_background_color": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "card_border_color": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "card_text_color": {
+      "type": "string",
+      "default": "#1a1a1a"
+    },
+    "card_radius": {
+      "type": "number",
+      "default": 12
+    },
+    "font_heading": {
+      "type": "string",
+      "default": "Inter"
+    },
+    "font_body": {
+      "type": "string",
+      "default": "Inter"
+    }
+  },
+  "required": [
+    "salon_id"
+  ],
+  "rls": {
+    "create": {
+      "$and": [
+        {
+          "data.salon_id": "{{user.data.salon_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": true,
+    "update": {
+      "$and": [
+        {
+          "data.salon_id": "{{user.data.salon_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "data.salon_id": "{{user.data.salon_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

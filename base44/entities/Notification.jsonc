@@ -1,0 +1,82 @@
+{
+  "name": "Notification",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "order",
+        "service",
+        "service_note",
+        "guest_message",
+        "chat",
+        "service_update"
+      ],
+      "default": "order"
+    },
+    "read": {
+      "type": "boolean",
+      "default": false
+    },
+    "salon_id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "target_role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "stylist"
+      ],
+      "default": "admin"
+    }
+  },
+  "required": [
+    "title",
+    "body",
+    "type"
+  ],
+  "rls": {
+    "create": {
+      "data.salon_id": "{{user.data.salon_id}}"
+    },
+    "read": {
+      "$and": [
+        {
+          "data.salon_id": "{{user.data.salon_id}}"
+        },
+        {
+          "data.target_role": "{{user.role}}"
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "data.salon_id": "{{user.data.salon_id}}"
+        },
+        {
+          "data.target_role": "{{user.role}}"
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "data.salon_id": "{{user.data.salon_id}}"
+        },
+        {
+          "data.target_role": "{{user.role}}"
+        }
+      ]
+    }
+  }
+}
