@@ -115,10 +115,11 @@
       "output": "release"
     },
     "files": [
-      "dist/**/*",
-      "electron.js",
-      "package.json"
-    ],
+  "dist/**/*",
+  "electron.js",
+  "preload.js",
+  "package.json"
+],
     "mac": {
       "target": [
         "dmg"
