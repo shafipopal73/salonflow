@@ -1,23 +1,23 @@
 {
   "name": "salonflow",
-"productName": "SalonFlow",
-"private": true,
-"version": "1.0.8",
-"type": "module",
-"main": "electron.js",
- "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "lint": "eslint . --quiet",
-  "lint:fix": "eslint . --fix",
-  "typecheck": "tsc -p ./jsconfig.json",
-  "preview": "vite preview",
-  "electron": "wait-on http://localhost:5173 && electron .",
-  "desktop:dev": "concurrently \"npm run dev\" \"npm run electron\"",
-  "desktop:build": "npm run build && electron-builder",
-  "desktop:mac": "npm run build && electron-builder --mac",
-  "desktop:win": "npm run build && electron-builder --win --publish never"
-},
+  "productName": "SalonFlow",
+  "private": true,
+  "version": "1.0.9",
+  "type": "module",
+  "main": "electron.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --quiet",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc -p ./jsconfig.json",
+    "preview": "vite preview",
+    "electron": "wait-on http://localhost:5173 && electron .",
+    "desktop:dev": "concurrently \"npm run dev\" \"npm run electron\"",
+    "desktop:build": "npm run build && electron-builder",
+    "desktop:mac": "npm run build && electron-builder --mac",
+    "desktop:win": "npm run build && electron-builder --win --publish never"
+  },
   "dependencies": {
     "@base44/sdk": "^0.8.40",
     "@base44/vite-plugin": "^1.0.30",
@@ -58,6 +58,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
+    "electron-updater": "^6.8.9",
     "embla-carousel-react": "^8.5.2",
     "framer-motion": "^11.16.4",
     "html2canvas": "^1.4.1",
@@ -109,13 +110,23 @@
     "wait-on": "^9.0.10"
   },
   "build": {
-    "appId": "live.salonflow.app",
-    "productName": "SalonFlow",
-    "directories": {
-      "output": "release"
+  "appId": "live.salonflow.app",
+  "productName": "SalonFlow",
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "shafipopal73",
+      "repo": "salonflow",
+      "releaseType": "release"
+    }
+  ],
+  "directories": {
+    "output": "release"
+  }
     },
-"files": [
+    "files": [
   "dist/**/*",
+  "build/**/*",
   "electron.js",
   "preload.cjs",
   "package.json"
@@ -127,20 +138,25 @@
       "category": "public.app-category.business"
     },
     "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64"
-          ]
-        }
+      "win": {
+  "icon": "build/icon.ico",
+  "target": [
+    {
+      "target": "nsis",
+      "arch": [
+        "x64"
       ]
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true
     }
+  ]
+},
+    "nsis": {
+  "oneClick": false,
+  "allowToChangeInstallationDirectory": true,
+  "createDesktopShortcut": true,
+  "createStartMenuShortcut": true,
+  "installerIcon": "build/icon.ico",
+  "uninstallerIcon": "build/icon.ico",
+  "installerHeaderIcon": "build/icon.ico"
+}
   }
 }

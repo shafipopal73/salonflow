@@ -28,6 +28,7 @@ function createWindow() {
     minWidth: 900,
     minHeight: 650,
     title: 'SalonFlow',
+    icon: path.join(__dirname, 'build', 'icon.png'),
     backgroundColor: '#0f172a',
     autoHideMenuBar: true,
     webPreferences: {
