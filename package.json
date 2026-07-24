@@ -2,7 +2,7 @@
   "name": "salonflow",
 "productName": "SalonFlow",
 "private": true,
-"version": "1.0.1",
+"version": "1.0.4",
 "type": "module",
 "main": "electron.js",
  "scripts": {
@@ -114,10 +114,10 @@
     "directories": {
       "output": "release"
     },
-    "files": [
+"files": [
   "dist/**/*",
   "electron.js",
-  "preload.js",
+  "preload.cjs",
   "package.json"
 ],
     "mac": {
